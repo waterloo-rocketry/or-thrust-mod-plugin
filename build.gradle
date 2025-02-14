@@ -33,9 +33,3 @@ tasks.register('run', JavaExec) {
     classpath = files('./OpenRocket-24.12.beta.01.jar', tasks.jar)
     systemProperty 'java.library.path', 'build/natives/lib'
 }
-
-tasks.register('tune', JavaExec) {
-    dependsOn jar
-    mainClass = 'com.waterloorocketry.thrustmodplugin'
-    classpath = files('./OpenRocket-24.12.beta.01.jar', tasks.jar)
-}
