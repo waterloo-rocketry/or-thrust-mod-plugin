@@ -42,6 +42,11 @@ public class ThrustModPlugin extends AbstractSimulationExtension {
         return config.getDouble("RefAtmPressure", 1.0); // TODO: Default?
     }
 
+    public void setRefAtmPressure(double refAtmPressure) {
+        config.put("RefAtmPressure", refAtmPressure);
+        fireChangeEvent();
+    }
+
     private class ThrustModListener extends AbstractSimulationListener {
 
         private static final Logger log = LoggerFactory.getLogger(ThrustModPlugin.class);
