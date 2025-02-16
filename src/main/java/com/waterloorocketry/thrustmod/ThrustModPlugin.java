@@ -39,7 +39,7 @@ public class ThrustModPlugin extends AbstractSimulationExtension {
     }
 
     public double getRefAtmPressure() {
-        return config.getDouble("RefAtmPressure", 1.0); // TODO: Default?
+        return config.getDouble("RefAtmPressure", 100000.0);
     }
 
     public void setRefAtmPressure(double refAtmPressure) {
@@ -69,18 +69,23 @@ public class ThrustModPlugin extends AbstractSimulationExtension {
         // https://github.com/openrocket/openrocket/blob/bdf79b82144a9a406cff6c523d3cd550a1cd5c1c/core/src/main/java/info/openrocket/core/simulation/RK4SimulationStepper.java#L301
         @Override
         public double postSimpleThrustCalculation(SimulationStatus status, double thrust) throws SimulationException {
+
+            if (thrust == 0) return thrust; // if rocket is not moving, do not modify
+
             // F_a = F_ref + (p_ref - p_inf) * Ae
             // Calculated thrust is for all motors => sum F_ref
             Collection<MotorClusterState> activeMotorList = status.getActiveMotors();
-            double adjustmentFactor = 0;
+            double totalAe = 0;
 
             for (MotorClusterState motorState : activeMotorList) {
-                adjustmentFactor += motorState.getMotor().getDiameter();
+                totalAe += motorState.getMotor().getDiameter();
             }
 
-            log.trace("Initial thrust: {}", thrust);
-            thrust += (atmRef - atm) * adjustmentFactor;
-            log.trace("Adjusted Thrust: {}", thrust);
+            double adjustmentFactor = (atmRef - atm) * totalAe;
+
+            System.out.println("Original thrust " + thrust);
+            System.out.println("Thrust adjusted by, " + adjustmentFactor);
+            thrust += adjustmentFactor;
 
             return thrust;
         }
