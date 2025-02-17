@@ -47,16 +47,27 @@ public class ThrustModPlugin extends AbstractSimulationExtension {
         fireChangeEvent();
     }
 
+    public double getNozzleDiameter() {
+        return config.getDouble("NozzleDiameter", 0.1524);
+    }
+
+    public void setNozzleDiameter(double nozzleDiameter) {
+        config.put("NozzleDiameter", nozzleDiameter);
+        fireChangeEvent();
+    }
+
     private class ThrustModListener extends AbstractSimulationListener {
 
         private static final Logger log = LoggerFactory.getLogger(ThrustModPlugin.class);
 
         private double atm; // current atmospheric pressure
         private final double atmRef; // reference atmospheric pressure
+        private final double Ae;
 
         private ThrustModListener() {
             this.atmRef = getRefAtmPressure();
             this.atm = atmRef;
+            this.Ae = Math.pow(getNozzleDiameter() /2, 2) * Math.PI;
         }
 
         @Override
@@ -70,21 +81,12 @@ public class ThrustModPlugin extends AbstractSimulationExtension {
         @Override
         public double postSimpleThrustCalculation(SimulationStatus status, double thrust) throws SimulationException {
 
-            if (thrust == 0) return thrust; // if rocket is not moving, do not modify
+            if (thrust == 0 || Ae == 0) return thrust; // if rocket is not moving, do not modify
 
-            // F_a = F_ref + (p_ref - p_inf) * Ae
-            // Calculated thrust is for all motors => sum F_ref
-            Collection<MotorClusterState> activeMotorList = status.getActiveMotors();
-            double totalAe = 0;
-
-            for (MotorClusterState motorState : activeMotorList) {
-                totalAe += motorState.getMotor().getDiameter();
-            }
-
-            double adjustmentFactor = (atmRef - atm) * totalAe;
+            double adjustmentFactor = (atmRef - atm) * Ae;
 
             System.out.println("Original thrust " + thrust);
-            System.out.println("Thrust adjusted by, " + adjustmentFactor);
+            System.out.println("Thrust adjusted by " + adjustmentFactor);
             thrust += adjustmentFactor;
 
             return thrust;

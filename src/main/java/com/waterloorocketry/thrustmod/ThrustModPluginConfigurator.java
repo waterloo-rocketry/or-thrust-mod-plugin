@@ -30,17 +30,30 @@ public class ThrustModPluginConfigurator extends AbstractSwingSimulationExtensio
         panel.add(new JLabel("Reference Atmospheric Pressure:"));
 
 
-        DoubleModel m = new DoubleModel(extension, "RefAtmPressure", UnitGroup.UNITS_PRESSURE, 0);
+        DoubleModel refAtmPressureModel = new DoubleModel(extension, "RefAtmPressure", UnitGroup.UNITS_PRESSURE, 0);
 
-        JSpinner spin = new JSpinner(m.getSpinnerModel());
-        spin.setEditor(new SpinnerEditor(spin));
-        panel.add(spin, "w 80lp!");
+        JSpinner refAtmPressureSpinner = new JSpinner(refAtmPressureModel.getSpinnerModel());
+        refAtmPressureSpinner.setEditor(new SpinnerEditor(refAtmPressureSpinner));
+        panel.add(refAtmPressureSpinner, "w 80lp!");
 
-        UnitSelector unit = new UnitSelector(m);
-        panel.add(unit, "w 25");
+        UnitSelector refAtmPressureUnit = new UnitSelector(refAtmPressureModel);
+        panel.add(refAtmPressureUnit, "w 25");
 
-        BasicSlider slider = new BasicSlider(m.getSliderModel(0, 500000));
-        panel.add(slider, "w 75lp, wrap");
+        BasicSlider refAtmPressureSlider = new BasicSlider(refAtmPressureModel.getSliderModel(0, 500000));
+        panel.add(refAtmPressureSlider, "w 75lp, wrap");
+
+        UnitGroup.UNITS_LENGTH.setDefaultUnit("in");
+        DoubleModel NozzleDiameterModel = new DoubleModel(extension, "NozzleDiameter", UnitGroup.UNITS_LENGTH, 0);
+
+        JSpinner nozzleDiameterSpin = new JSpinner(NozzleDiameterModel.getSpinnerModel());
+        nozzleDiameterSpin.setEditor(new SpinnerEditor(nozzleDiameterSpin));
+        panel.add(nozzleDiameterSpin, "w 80lp!");
+
+        UnitSelector nozzleDiameterUnit = new UnitSelector(NozzleDiameterModel);
+        panel.add(nozzleDiameterUnit, "w 25");
+
+        BasicSlider nozzleDiameterSlider = new BasicSlider(NozzleDiameterModel.getSliderModel(0, 100));
+        panel.add(nozzleDiameterSlider, "w 75lp, wrap");
 
         return panel;
 
