@@ -1,7 +1,6 @@
 package com.waterloorocketry.thrustmod;
 
 import info.openrocket.core.aerodynamics.FlightConditions;
-import info.openrocket.core.simulation.MotorClusterState;
 import info.openrocket.core.simulation.SimulationConditions;
 import info.openrocket.core.simulation.SimulationStatus;
 import info.openrocket.core.simulation.exception.SimulationException;
@@ -9,8 +8,6 @@ import info.openrocket.core.simulation.extension.AbstractSimulationExtension;
 import info.openrocket.core.simulation.listeners.AbstractSimulationListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Collection;
 
 /**
  * Initialize the plugin.

@@ -27,6 +27,24 @@ java {
     }
 }
 
+tasks.register('importToOR', Copy) {
+    from jar
+    into {
+        def os = System.getProperty('os.name').toLowerCase()
+        if (os.contains('win')) {
+            return System.getenv('APPDATA') + "/OpenRocket/plugins"
+        } else if (os.contains('mac')) {
+            return System.getProperty('user.home') + "/Library/Application Support/OpenRocket/plugins"
+        } else if (os.contains('nix') || os.contains('nux') || os.contains('aix')) {
+            return System.getProperty('user.home') + "/.openrocket/plugins"
+        } else {
+            throw new GradleException("Unsupported operating system: $os")
+        }
+    }
+
+    dependsOn build
+}
+
 tasks.register('run', JavaExec) {
     dependsOn jar
     mainClass = 'info.openrocket.swing.startup.OpenRocket'
