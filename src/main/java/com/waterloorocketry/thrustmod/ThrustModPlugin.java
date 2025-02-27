@@ -134,7 +134,7 @@ public class ThrustModPlugin extends AbstractSimulationExtension {
             }
 
             try(FileWriter writer = new FileWriter(path + "/ModifiedCurves/" + filename)) {
-                writer.write(StringUtils.join(modifiedThrustValues, ", "));
+                writer.write(StringUtils.join(modifiedThrustValues, ",\n"));
             } catch (IOException ioException) {
                 System.out.println(ioException.toString());
             }
