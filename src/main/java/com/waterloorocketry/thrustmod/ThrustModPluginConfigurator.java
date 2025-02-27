@@ -42,6 +42,8 @@ public class ThrustModPluginConfigurator extends AbstractSwingSimulationExtensio
         BasicSlider refAtmPressureSlider = new BasicSlider(refAtmPressureModel.getSliderModel(0, 500000));
         panel.add(refAtmPressureSlider, "w 75lp, wrap");
 
+        panel.add(new JLabel("Nozzle Diameter:"));
+
         UnitGroup.UNITS_LENGTH.setDefaultUnit("in");
         DoubleModel NozzleDiameterModel = new DoubleModel(extension, "NozzleDiameter", UnitGroup.UNITS_LENGTH, 0);
 
