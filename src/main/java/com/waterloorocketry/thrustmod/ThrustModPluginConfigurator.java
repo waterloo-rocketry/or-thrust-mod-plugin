@@ -1,5 +1,6 @@
 package com.waterloorocketry.thrustmod;
 
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -7,9 +8,11 @@ import javax.swing.JSpinner;
 
 import info.openrocket.core.document.Simulation;
 import info.openrocket.swing.gui.SpinnerEditor;
+import info.openrocket.swing.gui.adaptors.BooleanModel;
 import info.openrocket.swing.gui.adaptors.DoubleModel;
 import info.openrocket.core.plugin.Plugin;
 import info.openrocket.swing.gui.components.BasicSlider;
+import info.openrocket.swing.gui.components.CsvOptionPanel;
 import info.openrocket.swing.gui.components.UnitSelector;
 import info.openrocket.swing.simulation.extension.AbstractSwingSimulationExtensionConfigurator;
 import info.openrocket.core.unit.UnitGroup;
@@ -28,7 +31,6 @@ public class ThrustModPluginConfigurator extends AbstractSwingSimulationExtensio
     protected JComponent getConfigurationComponent(ThrustModPlugin extension, Simulation simulation, JPanel panel) {
 
         panel.add(new JLabel("Reference Atmospheric Pressure:"));
-
 
         DoubleModel refAtmPressureModel = new DoubleModel(extension, "RefAtmPressure", UnitGroup.UNITS_PRESSURE, 0);
 
@@ -56,6 +58,12 @@ public class ThrustModPluginConfigurator extends AbstractSwingSimulationExtensio
 
         BasicSlider nozzleDiameterSlider = new BasicSlider(NozzleDiameterModel.getSliderModel(0, 100));
         panel.add(nozzleDiameterSlider, "w 75lp, wrap");
+
+        panel.add(new JLabel("Save New Thrust Values"));
+        BooleanModel SaveThrustValuesModel = new BooleanModel(extension, "SaveThrustValues");
+
+        JCheckBox saveThrustValues = new JCheckBox(SaveThrustValuesModel);
+        panel.add(saveThrustValues, "w 25");
 
         return panel;
 
