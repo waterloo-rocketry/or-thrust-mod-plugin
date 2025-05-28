@@ -7,7 +7,7 @@ version '0.1'
 
 repositories {
     flatDir {
-        dirs '../../openrocket/build/libs' // Point to the submodule's output
+        dirs '../../openrocket/build/libs', './' // Point to integrated or-monte-carlo jar or standalone jar
     }
     // Use Maven Central for resolving dependencies.
     mavenCentral()
