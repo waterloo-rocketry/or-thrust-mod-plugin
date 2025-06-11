@@ -102,9 +102,9 @@ public class ThrustModPlugin extends AbstractSimulationExtension {
             if (thrust != 0) { // if rocket is not moving, do not modify
                 double adjustmentFactor = (atmRef - atm) * Ae;
 
-                System.out.println("Original thrust: " + thrust);
+                log.debug("Original thrust: " + thrust);
                 thrust += adjustmentFactor;
-                System.out.println("Modified thrust: " + thrust);
+                log.debug("Modified thrust: " + thrust);
             }
             if (getSaveThrustValues())
                 modifiedThrustValues.add(thrust);
