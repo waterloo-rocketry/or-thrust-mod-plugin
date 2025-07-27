@@ -21,8 +21,12 @@ sourceSets {
     }
 }
 
+ext {
+    openRocketVersion = project.hasProperty('openRocketVersion') ? project.getProperty('openRocketVersion') : '24.12'
+}
+
 dependencies {
-    implementation name: 'OpenRocket', version: '24.12.RC.01', group: 'info.openrocket'
+    implementation name: 'OpenRocket', version: openRocketVersion, group: 'info.openrocket'
 
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.2'
